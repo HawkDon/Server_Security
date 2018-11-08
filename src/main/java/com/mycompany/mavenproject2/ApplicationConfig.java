@@ -30,6 +30,8 @@ public class ApplicationConfig extends Application {
      */
     private void addRestResourceClasses(Set<Class<?>> resources) {
         resources.add(com.mycompany.mavenproject2.UserResource.class);
+        resources.add(cors.CorsRequestFilter.class);
+        resources.add(cors.CorsResponseFilter.class);
     }
     
 }
