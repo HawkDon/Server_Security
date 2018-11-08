@@ -26,8 +26,7 @@ import javax.ws.rs.core.Response;
  */
 @Path("user")
 public class UserResource {
-    
-    UserFacade uf = new UserFacade();
+
     Gson gson = new Gson();
     @Context
     private UriInfo context;
@@ -48,20 +47,27 @@ public class UserResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public String getUser() {
-        User user = new User("Stefan");
+        User user = new User("Oliver", "derpderp");
         return gson.toJson(user);
     }
 
-    /**
-     * PUT method for updating or creating an instance of UserResource
-     *
-     * @param content representation for the resource
-     */
     @Path("/adduser")
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public void addUser(String user) {
         User u = gson.fromJson(user, User.class);
-        uf.addUser(u);
+
+        UserFacade.addUser(u);
+    }
+
+    @Path("/login")
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    public void loginUser(String user) {
+        User u = gson.fromJson(user, User.class);
+
+        boolean isIdentical = UserFacade.loginUser(u);
+
+        System.out.println(isIdentical);
     }
 }

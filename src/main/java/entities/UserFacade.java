@@ -5,10 +5,8 @@
  */
 package entities;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
+
 import org.mindrot.jbcrypt.BCrypt;
 
 /**
@@ -17,18 +15,13 @@ import org.mindrot.jbcrypt.BCrypt;
  */
 public class UserFacade {
 
-    private Connection con;
+    public static void addUser(User user) {
 
-    public UserFacade() {
-        con = new DB().getConnection();
-    }
+        Connection con = new DB().getConnection();
 
-    public void addUser(User user) {
-        PreparedStatement newUser = null;
-        String SQLString = "insert into users (username, firstname, lastname, email, password) values (?,?,?,?,?)";
         try {
             con.setAutoCommit(false);
-            newUser = con.prepareStatement(SQLString);
+            PreparedStatement newUser = con.prepareStatement("insert into users (username, firstname, lastname, email, password) values (?,?,?,?,?)");
             newUser.setString(1, user.getUserName());
             newUser.setString(2, user.getFirstName());
             newUser.setString(3, user.getLastName());
@@ -38,14 +31,39 @@ public class UserFacade {
 
             con.setAutoCommit(true);
         } catch (SQLException e) {
-            System.out.println("Fail in DataMapper - addUser");
+            System.out.println("Failed in datamapper - user");
             System.out.println(e.getMessage());
+        } finally {
+            DB.closeConnection(con);
         }
     }
 
-    public static void main(String[] args) {
-        User user = new User("mjaay", "Mathias", "Jensenius", "mjaay@gmail.com", "test123");
-        UserFacade uf = new UserFacade();
-        uf.addUser(user);
+
+    public static boolean loginUser(User user) {
+
+        boolean isIdentical = false;
+
+        Connection con = new DB().getConnection();
+
+        try {
+            con.setAutoCommit(false);
+            PreparedStatement getUser = con.prepareStatement("select password from users where username = ?");
+            getUser.setString(1, user.getUserName());
+
+            ResultSet rs = getUser.executeQuery();
+
+            String password = null;
+
+            while(rs.next()) {
+                password = rs.getString("password");
+            }
+
+            isIdentical = BCrypt.checkpw(user.getPassword(), password);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return isIdentical;
     }
 }

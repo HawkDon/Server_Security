@@ -8,32 +8,40 @@ package entities;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 /**
  *
  * @author Mathias BJ
  */
 public class DB {
-      private Connection con;
+    private Connection con;
     private static DB instance;
     private static PreparedStatement stmt;
     private static String driver = "com.mysql.jdbc.Driver";
-    private static String URL = "jdbc:mysql://localhost:3306/security";
+    private static String URL = "jdbc:mysql://localhost:3306/security?useSSL=false";
     private static String id = "root";
-    private static String pw = "m4th145bj";
+    private static String pw = "test1234";
 
     public Connection getConnection() {
         Connection con = null;
         try {
-            Class.forName(driver);
-            con = DriverManager.getConnection(URL, id, pw);  // The connection will be released upon program 
-
+            Class.forName(driver).newInstance();
+            con = DriverManager.getConnection(URL, id, pw);  // The connection will be released upon program
         } catch (Exception e) {
             System.out.println("\n*** Remember to insert your  ID and PW in the DBConnector class! ***\n");
             System.out.println("error in DBConnector.getConnection()");
             System.out.println(e);
         }
-
         return con;
+    }
+
+    public static void closeConnection(Connection con) {
+        try {
+            con.close();
+        } catch (SQLException e) {
+            System.out.println("Something happened when you tried to close the connection");
+            System.out.println(e.getMessage());
+        }
     }
 }
