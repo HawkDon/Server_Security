@@ -5,6 +5,8 @@
  */
 package entities;
 
+import ConnectionInfo.ConnectionCredentials;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -15,13 +17,14 @@ import java.sql.SQLException;
  * @author Mathias BJ
  */
 public class DB {
+
     private Connection con;
     private static DB instance;
     private static PreparedStatement stmt;
     private static String driver = "com.mysql.jdbc.Driver";
-    private static String URL = "jdbc:mysql://46.101.217.233:3306/security";
-    private static String id = "user";
-    private static String pw = "Kode0871";
+    private static String URL = ConnectionCredentials.getURL();
+    private static String id = ConnectionCredentials.getId();
+    private static String pw = ConnectionCredentials.getPw();
 
     public Connection getConnection() {
         Connection con = null;

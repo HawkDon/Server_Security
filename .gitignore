@@ -4,5 +4,5 @@
 
 Server_security.iml
 
-src/main/java/entities/DB.java
+src/main/java/ConnectionInfo/ConnectionCredentials.java
 
