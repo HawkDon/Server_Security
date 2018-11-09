@@ -5,7 +5,7 @@
  */
 package entities;
 
-import ConnectionInfo.ConnectionCredentials;
+import connectioninfo.ConnectionCredentials;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

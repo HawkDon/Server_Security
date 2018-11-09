@@ -3,13 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mycompany.mavenproject2;
+package rest;
 
-import Tokens.Secured;
+import filter.Secured;
 import com.google.gson.Gson;
 import entities.User;
-import entities.UserFacade;
-import Tokens.Token;
+import datamappers.UserDataMapper;
+import logic.Token;
+import logic.UserFacade;
 
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
@@ -30,7 +31,6 @@ import javax.ws.rs.core.Response;
 public class UserResource {
 
     Gson gson = new Gson();
-    Token tokenFacade = new Token();
 
     @Context
     private UriInfo context;
@@ -47,7 +47,7 @@ public class UserResource {
     public void addUser(String user) {
         User u = gson.fromJson(user, User.class);
 
-        UserFacade.addUser(u);
+        UserDataMapper.addUser(u);
     }
 
     @Path("/login")
@@ -56,20 +56,8 @@ public class UserResource {
     public Response loginUser(String user) {
         User u = gson.fromJson(user, User.class);
 
-        boolean isIdentical = UserFacade.loginUser(u);
+        Response response = UserFacade.userValidation(u);
 
-        String token;
-        User newUser;
-        Response response;
-
-        if(isIdentical) {
-                // Get credentials and sign it a token
-                newUser = UserFacade.getUserCredentials(u);
-                token = tokenFacade.createToken(newUser);
-                response = Response.ok(gson.toJson(token), MediaType.APPLICATION_JSON).build();
-        } else {
-            response = Response.status(Response.Status.FORBIDDEN).build();
-        }
         return response;
     }
 

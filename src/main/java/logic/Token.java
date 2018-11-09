@@ -1,4 +1,4 @@
-package Tokens;
+package logic;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
@@ -11,15 +11,12 @@ import com.google.gson.Gson;
 import entities.User;
 
 import java.util.Base64;
-import java.util.Date;
 
 public class Token {
 
     // Convert JSON to object
-    Gson gson = new Gson();
 
-
-    public String createToken(User user) {
+    public static String createToken(User user) {
 
         // Temporarely
         String secretPassword = user.getUserName();
@@ -41,7 +38,8 @@ public class Token {
         }
         return token;
     }
-    public void validateToken(String token) throws Exception {
+
+    public static void validateToken(String token) throws Exception {
         User user = decodeTokenForVerification(token);
 
         // Used algoritm to sign our password.
@@ -61,7 +59,9 @@ public class Token {
 
     }
 
-    public User decodeTokenForVerification (String token) {
+    public static User decodeTokenForVerification (String token) {
+        // Get json
+        Gson gson = new Gson();
         // Decode to verify later
         User user = new User();
         try {

@@ -3,17 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package entities;
+package datamappers;
 
 import java.sql.*;
 
+import entities.DB;
+import entities.User;
 import org.mindrot.jbcrypt.BCrypt;
 
 /**
  *
  * @author Mathias BJ
  */
-public class UserFacade {
+public class UserDataMapper {
 
     public static void addUser(User user) {
 

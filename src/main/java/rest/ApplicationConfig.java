@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mycompany.mavenproject2;
+package rest;
 
 import java.util.Set;
 import javax.ws.rs.core.Application;
@@ -29,10 +29,10 @@ public class ApplicationConfig extends Application {
      * If required, comment out calling this method in getClasses().
      */
     private void addRestResourceClasses(Set<Class<?>> resources) {
-        resources.add(com.mycompany.mavenproject2.UserResource.class);
-        resources.add(cors.CorsRequestFilter.class);
-        resources.add(cors.CorsResponseFilter.class);
-        resources.add(Tokens.AuthenticationFilter.class);
+        resources.add(UserResource.class);
+        resources.add(filter.CorsRequestFilter.class);
+        resources.add(filter.CorsResponseFilter.class);
+        resources.add(filter.AuthenticationFilter.class);
     }
     
 }

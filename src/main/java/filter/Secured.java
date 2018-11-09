@@ -1,4 +1,4 @@
-package Tokens;
+package filter;
 
 import javax.ws.rs.NameBinding;
 import java.lang.annotation.Retention;

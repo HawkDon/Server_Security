@@ -1,4 +1,6 @@
-package Tokens;
+package filter;
+
+import logic.Token;
 
 import javax.annotation.Priority;
 import javax.ws.rs.Priorities;
@@ -14,7 +16,6 @@ import java.io.IOException;
 @Priority(Priorities.AUTHENTICATION)
 public class AuthenticationFilter implements ContainerRequestFilter {
 
-    Token tkFacade = new Token();
     private static final String REALM = "example";
     private static final String AUTHENTICATION_SCHEME = "Bearer";
 
@@ -38,7 +39,7 @@ public class AuthenticationFilter implements ContainerRequestFilter {
         try {
 
             // Validate the token
-            tkFacade.validateToken(token);
+            Token.validateToken(token);
 
         } catch (Exception e) {
             abortWithUnauthorized(requestContext);
