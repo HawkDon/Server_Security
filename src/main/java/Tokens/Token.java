@@ -15,17 +15,19 @@ import java.util.Date;
 
 public class Token {
 
-    // password to sign. Think of it as a password and the bread and butter to keep the token secret. If this password is exposed you are having a bad time.
-    private final String secretPassword = "secret";
-
-    // Used algoritm to sign our password.
-    private final Algorithm algorithm = Algorithm.HMAC256(secretPassword);
-
     // Convert JSON to object
     Gson gson = new Gson();
 
 
     public String createToken(User user) {
+
+        // Temporarely
+        String secretPassword = user.getUserName();
+
+        // Used algoritm to sign our password.
+
+        Algorithm algorithm = Algorithm.HMAC256(secretPassword);
+
         String token = null;
         try {
             token = JWT.create()
@@ -39,22 +41,22 @@ public class Token {
         }
         return token;
     }
-
-    public void verifyToken(String token) {
+    public void validateToken(String token) throws Exception {
         User user = decodeTokenForVerification(token);
+
+        // Used algoritm to sign our password.
+        Algorithm algorithm = Algorithm.HMAC256(user.getUserName());
+
         try {
             // Verify token else throw exception.
-            System.out.println(JWT.decode(token).getPayload());
             JWTVerifier verifier = JWT.require(algorithm)
-                    .withClaim("id", user.getUserName())
-                    .withClaim("password", user.getPassword())
+                    .withClaim("id", user.getId())
+                    .withClaim("userName", user.getUserName())
                     .build();
-            DecodedJWT jwt = verifier.verify(token);
-            System.out.println(jwt.getToken());
-            System.out.println(new String(Base64.getDecoder().decode(jwt.getPayload())));
+            verifier.verify(token);
         } catch (JWTVerificationException exception){
             System.out.println("Invalid signature claims happened. The token does not match");
-            System.out.println(exception.getMessage());
+            throw new Exception();
         }
 
     }

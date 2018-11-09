@@ -5,6 +5,7 @@
  */
 package com.mycompany.mavenproject2;
 
+import Tokens.Secured;
 import com.google.gson.Gson;
 import entities.User;
 import entities.UserFacade;
@@ -40,20 +41,6 @@ public class UserResource {
     public UserResource() {
     }
 
-    /**
-     * Retrieves representation of an instance of
-     * com.mycompany.mavenproject2.UserResource
-     *
-     * @return an instance of java.lang.String
-     */
-    @Path("/Tokens")
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    public String getUser() {
-        User user = new User("Oliver", "derpderp");
-        return gson.toJson(user);
-    }
-
     @Path("/adduser")
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
@@ -84,5 +71,13 @@ public class UserResource {
             response = Response.status(Response.Status.FORBIDDEN).build();
         }
         return response;
+    }
+
+    @GET
+    @Secured
+    @Path("/test")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String test() {
+        return gson.toJson("hello");
     }
 }

@@ -32,6 +32,7 @@ public class ApplicationConfig extends Application {
         resources.add(com.mycompany.mavenproject2.UserResource.class);
         resources.add(cors.CorsRequestFilter.class);
         resources.add(cors.CorsResponseFilter.class);
+        resources.add(Tokens.AuthenticationFilter.class);
     }
     
 }
