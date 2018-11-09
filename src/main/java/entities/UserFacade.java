@@ -61,9 +61,36 @@ public class UserFacade {
             isIdentical = BCrypt.checkpw(user.getPassword(), password);
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println("Failed in datamapper - loginUser");
+            e.getMessage();
         }
 
         return isIdentical;
+    }
+
+    public static User getUserCredentials(User user) {
+
+        User newUser = new User();
+
+        Connection con = new DB().getConnection();
+
+        try {
+            con.setAutoCommit(false);
+            PreparedStatement getUser = con.prepareStatement("select id, username from users where username = ?");
+            getUser.setString(1, user.getUserName());
+
+            ResultSet rs = getUser.executeQuery();
+
+            while(rs.next()) {
+                newUser.setId(rs.getInt("id"));
+                newUser.setUserName(rs.getString("username"));
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Failed in datamapper - getUserCredentials");
+            e.getMessage();
+        }
+
+        return newUser;
     }
 }

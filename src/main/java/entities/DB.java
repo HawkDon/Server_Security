@@ -19,9 +19,9 @@ public class DB {
     private static DB instance;
     private static PreparedStatement stmt;
     private static String driver = "com.mysql.jdbc.Driver";
-    private static String URL = "jdbc:mysql://localhost:3306/security?useSSL=false";
-    private static String id = "root";
-    private static String pw = "test1234";
+    private static String URL = "jdbc:mysql://46.101.217.233:3306/security";
+    private static String id = "user";
+    private static String pw = "Kode0871";
 
     public Connection getConnection() {
         Connection con = null;

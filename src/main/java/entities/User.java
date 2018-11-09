@@ -9,11 +9,16 @@ import org.mindrot.jbcrypt.BCrypt;
 
 public class User {
 
+    private int id;
     private String userName;
     private String firstName;
     private String lastName;
     private String email;
     private String password;
+
+    public User() {
+
+    }
 
     public User(String username, String password) {
         this.userName = username;
@@ -74,5 +79,13 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }
