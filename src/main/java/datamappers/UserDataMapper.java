@@ -7,8 +7,10 @@ package datamappers;
 
 import java.sql.*;
 
+import com.google.gson.Gson;
 import entities.DB;
 import entities.User;
+import logic.BCryptValidation;
 import org.mindrot.jbcrypt.BCrypt;
 
 /**
@@ -17,10 +19,13 @@ import org.mindrot.jbcrypt.BCrypt;
  */
 public class UserDataMapper {
 
-    public static void addUser(User user) {
+    public static String addUser(User user) {
+
+        Gson gson = new Gson();
 
         Connection con = new DB().getConnection();
 
+        String result;
         try {
             con.setAutoCommit(false);
             PreparedStatement newUser = con.prepareStatement("insert into users (username, firstname, lastname, email, password) values (?,?,?,?,?)");
@@ -32,12 +37,15 @@ public class UserDataMapper {
             newUser.executeUpdate();
 
             con.setAutoCommit(true);
+            result = gson.toJson("User has been registered!");
         } catch (SQLException e) {
             System.out.println("Failed in datamapper - user");
             System.out.println(e.getMessage());
+            result = gson.toJson("User did not register. Please try again.");
         } finally {
             DB.closeConnection(con);
         }
+        return result;
     }
 
 
@@ -54,13 +62,13 @@ public class UserDataMapper {
 
             ResultSet rs = getUser.executeQuery();
 
-            String password = null;
+            String password = "";
 
             while(rs.next()) {
                 password = rs.getString("password");
             }
 
-            isIdentical = BCrypt.checkpw(user.getPassword(), password);
+            isIdentical = BCryptValidation.validate(user.getPassword(), password);
 
         } catch (SQLException e) {
             System.out.println("Failed in datamapper - loginUser");
@@ -91,6 +99,8 @@ public class UserDataMapper {
         } catch (SQLException e) {
             System.out.println("Failed in datamapper - getUserCredentials");
             e.getMessage();
+        } finally {
+            DB.closeConnection(con);
         }
 
         return newUser;

@@ -41,13 +41,15 @@ public class UserResource {
     public UserResource() {
     }
 
-    @Path("/adduser")
+    @Path("/register")
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    public void addUser(String user) {
+    public String addUser(String user) {
         User u = gson.fromJson(user, User.class);
 
-        UserDataMapper.addUser(u);
+        String response = UserDataMapper.addUser(u);
+
+        return response;
     }
 
     @Path("/login")
@@ -66,6 +68,6 @@ public class UserResource {
     @Path("/test")
     @Produces(MediaType.APPLICATION_JSON)
     public String test() {
-        return gson.toJson("hello");
+        return gson.toJson("hellooooo");
     }
 }

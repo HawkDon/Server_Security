@@ -2,6 +2,7 @@ package logic;
 
 import com.google.gson.Gson;
 import datamappers.UserDataMapper;
+import entities.ErrorMessage;
 import entities.User;
 
 import javax.ws.rs.core.MediaType;
@@ -24,7 +25,7 @@ public class UserFacade {
             String token = Token.createToken(user);
             response = Response.ok(gson.toJson(token), MediaType.APPLICATION_JSON).build();
         } else {
-            response = Response.status(Response.Status.FORBIDDEN).build();
+            response = Response.ok(gson.toJson(new ErrorMessage("Wrong username or password, please try again.", true)), MediaType.APPLICATION_JSON).build();
         }
         return response;
     }
