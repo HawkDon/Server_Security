@@ -9,7 +9,6 @@ import filter.Secured;
 import com.google.gson.Gson;
 import entities.User;
 import datamappers.UserDataMapper;
-import logic.Token;
 import logic.UserFacade;
 
 import javax.ws.rs.core.Context;
@@ -22,11 +21,6 @@ import javax.ws.rs.Path;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-/**
- * REST Web Service
- *
- * @author Mathias BJ
- */
 @Path("user")
 public class UserResource {
 

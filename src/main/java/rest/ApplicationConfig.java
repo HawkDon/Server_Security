@@ -29,6 +29,7 @@ public class ApplicationConfig extends Application {
      * If required, comment out calling this method in getClasses().
      */
     private void addRestResourceClasses(Set<Class<?>> resources) {
+        resources.add(QueryResource.class);
         resources.add(UserResource.class);
         resources.add(filter.CorsRequestFilter.class);
         resources.add(filter.CorsResponseFilter.class);
