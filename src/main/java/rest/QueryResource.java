@@ -4,6 +4,7 @@ package rest;
 
 import com.google.gson.Gson;
 import entities.QueryMessage;
+import filter.Secured;
 import logic.QueryFacade;
 
 import javax.ws.rs.*;
@@ -37,12 +38,15 @@ public class QueryResource {
     }
 
 
-    @Path("/notSafeExecute/{id}")
-    @GET
+    @Path("/notSafeExecute")
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getQueryNotSafe(@PathParam("id") String id){
+    public Response getQueryNotSafe(String queryMessage){
 
-        Response response = QueryFacade.readQueryNotSafe(id);
+        QueryMessage qm = gson.fromJson(queryMessage, QueryMessage.class);
+
+        Response response = QueryFacade.readQuery(qm);
 
         return response;
     }

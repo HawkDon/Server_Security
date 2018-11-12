@@ -21,7 +21,7 @@ public class QueryFacade {
         if (!listOfItems.isEmpty()) {
             response = Response.ok(gson.toJson(listOfItems, List.class), MediaType.APPLICATION_JSON).build();
         } else {
-            response = Response.ok(gson.toJson(new ErrorMessage("Invalid query string, please try again", true)), MediaType.APPLICATION_JSON).build();
+            response = Response.ok(gson.toJson(new ErrorMessage("Invalid sqlquery string, please try again", true)), MediaType.APPLICATION_JSON).build();
         }
         return response;
     }
@@ -35,7 +35,7 @@ public class QueryFacade {
         if (!listOfItems.isEmpty()) {
             response = Response.ok(gson.toJson(listOfItems, List.class), MediaType.APPLICATION_JSON).build();
         } else {
-            response = Response.ok(gson.toJson(new ErrorMessage("Invalid query string, please try again", true)), MediaType.APPLICATION_JSON).build();
+            response = Response.ok(gson.toJson(new ErrorMessage("Invalid sqlquery string, please try again", true)), MediaType.APPLICATION_JSON).build();
         }
         return response;
     }

@@ -37,6 +37,12 @@
             <version>5.1.46</version>
         </dependency>
         <dependency>
+            <groupId>com.mycompany</groupId>
+            <artifactId>Server_Security</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <type>war</type>
+        </dependency>
+        <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-web-api</artifactId>
             <version>7.0</version>
