@@ -56,7 +56,7 @@ public class Restore {
         return response;
     }*/
 
-    /*public static void main(String[] args) throws SQLException, IOException, ClassNotFoundException {
+    public static void main(String[] args) throws SQLException, IOException, ClassNotFoundException {
         backupDB();
-    }*/
+    }
 }
